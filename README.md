@@ -31,9 +31,15 @@ El perfil `dev` crea las siguientes cuentas si no existen. Todas usan **Cancun20
 1. Visite la bienvenida y el cat?logo; abra un viaje.
 2. Inicie sesi?n como `usuario`, registre una reserva de prueba y consulte Mis reservas.
 3. Con `administrador` cree o edite un viaje y gestione una cuenta. `dueno` tambi?n puede crear o editar viajes.
-4. Con `empleado` registre un presupuesto; cierre sesi?n y, con `dueno`, apru?belo o rech?celo.
+4. Con `empleado` registre un presupuesto; con `administrador` pres?ntelo al due?o y luego, con `dueno`, apru?belo o rech?celo.
 5. Con `guia` registre una salida o actividad. Cierre sesi?n entre roles.
 
 ## Pruebas y limitaciones
 
 Ejecute `.\mvnw.cmd test`; las pruebas usan H2 en memoria. La desactivaci?n impide nuevos inicios de sesi?n, pero no cierra sesiones ya abiertas. Los eventos son una bit?cora general, sin asociaci?n a viajes o reservas. Las reservas son de un cupo y no incluyen pago, cancelaci?n ni confirmaci?n externa. No hay recuperaci?n de contrase?a, edici?n de roles, migraciones controladas ni aprovisionamiento de administrador para producci?n. Los estilos y la ilustraci?n funcionan sin conexi?n; Bootstrap y las fuentes se cargan desde CDN cuando est?n disponibles.
+
+## Sprint 2
+
+El empleado puede asignar un gu?a activo y registrar notas desde el detalle de un viaje. Los presupuestos pasan del empleado al administrador y, tras su presentaci?n, al due?o para su aprobaci?n o rechazo. El administrador tambi?n puede registrar presupuestos. El cat?logo permite buscar viajes.
+
+Antes de abrir una base PostgreSQL de una versi?n anterior, realice una copia de seguridad. Al arrancar, el script de inicializaci?n actualiza los presupuestos pendientes y a?ade la versi?n de viaje necesaria para evitar sobrescrituras; requiere permisos ALTER y UPDATE. Consulte [SPRINT2.md](SPRINT2.md).

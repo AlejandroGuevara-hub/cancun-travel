@@ -8,15 +8,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Trip {
+	@Version private Long version;
+	public Long getVersion(){return version;} public void setVersion(Long v){version=v;}
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 	@NotBlank(message="Indica el nombre") @Size(max=100) @Column(nullable=false) private String name;
 	@NotBlank(message="Indica el destino") @Size(max=100) @Column(nullable=false) private String destination;
-	@NotBlank(message="Agrega una descripci?n") @Size(max=1000) @Column(nullable=false, length=1000) private String description;
+	@NotBlank(message="Agrega una descripción") @Size(max=1000) @Column(nullable=false, length=1000) private String description;
 	@NotNull(message="Indica la fecha de salida") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) @Column(nullable=false) private LocalDate startDate;
 	@NotNull(message="Indica la fecha de regreso") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) @Column(nullable=false) private LocalDate endDate;
 	@NotNull(message="Indica el precio") @DecimalMin(value="0.01", message="El precio debe ser mayor a cero") @Digits(integer=9, fraction=2) @Column(nullable=false, precision=11, scale=2) private BigDecimal price;
 	@NotNull(message="Indica los cupos") @Min(value=0, message="Los cupos no pueden ser negativos") @Max(10000) @Column(nullable=false) private Integer available;
 	@AssertTrue(message="La fecha de regreso debe ser igual o posterior a la salida") public boolean isDatesValid() { return startDate == null || endDate == null || !endDate.isBefore(startDate); }
+	@ManyToOne(fetch=FetchType.EAGER) private AppUser guide;
+	@Size(max=1000) @Column(length=1000) private String organizationNotes;
+	public AppUser getGuide(){return guide;} public void setGuide(AppUser v){guide=v;}
+	public String getOrganizationNotes(){return organizationNotes;} public void setOrganizationNotes(String v){organizationNotes=v;}
 	public Long getId(){return id;} public String getName(){return name;} public void setName(String v){name=v;}
 	public String getDestination(){return destination;} public void setDestination(String v){destination=v;}
 	public String getDescription(){return description;} public void setDescription(String v){description=v;}
